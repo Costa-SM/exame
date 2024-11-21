@@ -1,0 +1,8 @@
+# Virtual Environment folder
+.venv
+
+# VSCode folder
+.vscode
+
+# Python cache files
+*.pyc

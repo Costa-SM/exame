@@ -1,0 +1,2 @@
+class RRTParameters:
+    DELTA: float
