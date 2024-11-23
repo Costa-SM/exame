@@ -21,27 +21,27 @@ class Tree:
         """
         self.root = TreeNode(x, y, None)
 
-    def print_tree(self):
+    def print(self):
         """Prints a representation of the tree"""
         self._print_tree_recursion(self.root)
 
-    def _print_tree_recursion(self, node: TreeNode, depth: int = 0):
+    def _print_recursion(self, node: TreeNode, depth: int = 0):
         """Recursive call to print the nodes of a tree"""
         print("  " * depth, f"Node ({node.x:.4f}, {node.y:.4f})")
 
         for child in node.children:
-            self._print_tree_recursion(child, depth + 1)
+            self._print_recursion(child, depth + 1)
 
-    def plot_tree(self):
+    def plot(self):
         """Creates a plot representing the tree"""
         plt.title("Tree Representation")
         plt.xlabel("$x$ coordinate (m)")
         plt.ylabel("$y$ coordinate (m)")
-        self._plot_tree_recursion(self.root)
+        self._plot_recursion(self.root)
 
         plt.show()
 
-    def _plot_tree_recursion(self, node: TreeNode):
+    def _plot_recursion(self, node: TreeNode):
         """Recursive call to plot the nodes of a tree"""
         # Plot this node
         plt.plot(node.x, node.y, "o", color="tab:blue", zorder=1)
@@ -57,7 +57,7 @@ class Tree:
 
         # Continue calling for all children
         for child in node.children:
-            self._plot_tree_recursion(child)
+            self._plot_recursion(child)
 
 
 class TreeNode:
@@ -106,5 +106,5 @@ if __name__ == "__main__":
 
     sample_tree.root.children[0].extend(2.0, 2.0, 2.0)
 
-    sample_tree.print_tree()
-    sample_tree.plot_tree()
+    sample_tree.print()
+    sample_tree.plot()
