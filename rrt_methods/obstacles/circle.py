@@ -3,6 +3,7 @@
 # Created: 23.11.2024
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from rrt_methods.obstacles.obstacle import Obstacle
 
@@ -30,6 +31,17 @@ class Circle(Obstacle):
                 edgecolor="black",
             )
         )
+
+    def distance(self, x: float, y: float) -> float:
+        """
+        Calculates a point's distance to the circle
+        * x: x coordinate of the point
+        * y: y coordinate of the point
+        """
+        return float(np.max((
+            np.linalg.norm([self.x - x, self.y - y]) - self.r,
+            0
+        )))
 
     @staticmethod
     def __main__():

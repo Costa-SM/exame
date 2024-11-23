@@ -3,6 +3,7 @@
 # Created: 23.11.2024
 
 import matplotlib.pyplot as plt
+import shapely.geometry as geo
 
 from rrt_methods.obstacles.obstacle import Obstacle
 
@@ -16,9 +17,14 @@ class Polygon(Obstacle):
         * ys: list of y coordinates of the polygon's contour
         """
         self.xys = list(zip(xs, ys))
+        self.poly = geo.Polygon(self.xys)
 
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
-        """Plots the polygon in the figure"""
+        """
+        Plots the polygon in the figure
+        * fig: pyplot's figure
+        * ax: pyplot's axes
+        """
         ax.add_patch(
             plt.Polygon(
                 self.xys,
@@ -26,6 +32,14 @@ class Polygon(Obstacle):
                 edgecolor="black",
             )
         )
+
+    def distance(self, x: float, y: float) -> float:
+        """
+        Calculates a point's distance to the polygon
+        * x: x coordinate of the point
+        * y: y coordinate of the point
+        """
+        return self.poly.distance(geo.Point((x, y)))
 
     def __main__():
         fig, ax = plt.subplots()

@@ -16,7 +16,20 @@ class Obstacle(ABC):
 
     @abstractmethod
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
-        """Plots the obstacle in the figure"""
+        """
+        Plots the obstacle in the figure
+        * fig: pyplot's figure
+        * ax: pyplot's axes
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def distance(self, x: float, y: float) -> float:
+        """
+        Calculates a point's distance to the obstacle
+        * x: x coordinate of the point
+        * y: y coordinate of the point
+        """
         raise NotImplementedError()
 
     @staticmethod
