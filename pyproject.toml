@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "rrt-methods"
+name = "rrt_methods"
 version = "0.1.0"
 description = ""
-authors = ["Arthur Stevenson <arthurcstevenson@gmail.com>"]
+authors = ["Arthur Stevenson <arthurcstevenson@gmail.com>", "João Lucas <joaolucasrrolim@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
