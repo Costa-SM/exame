@@ -2,6 +2,8 @@
 # Author: João Lucas
 # Created: 23.11.2024
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 
 from abc import ABC, abstractmethod
@@ -11,7 +13,9 @@ class Obstacle(ABC):
 
     @abstractmethod
     def __init__(self) -> None:
-        """Abstract class that represents an obstacle"""
+        """
+        Abstract class that represents an obstacle
+        """
         raise NotImplementedError()
 
     @abstractmethod
@@ -19,7 +23,7 @@ class Obstacle(ABC):
         """
         Plots the obstacle in the figure
         * fig: pyplot's figure
-        * ax: pyplot's axes
+        * ax: pyplot's axes (1 axis)
         """
         raise NotImplementedError()
 

@@ -2,6 +2,8 @@
 # Author: João Lucas
 # Created: 23.11.2024
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -22,7 +24,12 @@ class Circle(Obstacle):
         self.r = r
 
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
-        """Plots the circle in the figure"""
+        """
+        Plots the circle in the figure
+        * fig: pyplot's figure
+        * ax: pyplot's axes (1 axis)
+        """
+        ax.autoscale_view()
         ax.add_patch(
             plt.Circle(
                 [self.x, self.y],
@@ -49,7 +56,6 @@ class Circle(Obstacle):
         ax.set_title("Circle")
         circle = Circle(0, 0, 10)
         circle.plot(fig, ax)
-        ax.autoscale_view()
         plt.show()
 
 

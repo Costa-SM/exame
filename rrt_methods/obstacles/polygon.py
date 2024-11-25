@@ -2,6 +2,8 @@
 # Author: João Lucas
 # Created: 23.11.2024
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import shapely.geometry as geo
 
@@ -23,8 +25,9 @@ class Polygon(Obstacle):
         """
         Plots the polygon in the figure
         * fig: pyplot's figure
-        * ax: pyplot's axes
+        * ax: pyplot's axes (1 axis)
         """
+        ax.autoscale_view()
         ax.add_patch(
             plt.Polygon(
                 self.xys,
@@ -46,7 +49,6 @@ class Polygon(Obstacle):
         ax.set_title("Polygon")
         polygon = Polygon([-5, -5, 5, 5], [-5, 5, 5, -5])
         polygon.plot(fig, ax)
-        ax.autoscale_view()
         plt.show()
 
 

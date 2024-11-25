@@ -22,18 +22,24 @@ class Tree:
         self.root = TreeNode(x, y, None)
 
     def print(self):
-        """Prints a representation of the tree"""
+        """
+        Prints a representation of the tree
+        """
         self._print_tree_recursion(self.root)
 
     def _print_recursion(self, node: TreeNode, depth: int = 0):
-        """Recursive call to print the nodes of a tree"""
+        """
+        Recursive call to print the nodes of a tree
+        """
         print("  " * depth, f"Node ({node.x:.4f}, {node.y:.4f})")
 
         for child in node.children:
             self._print_recursion(child, depth + 1)
 
     def plot(self):
-        """Creates a plot representing the tree"""
+        """
+        Creates a plot representing the tree
+        """
         plt.title("Tree Representation")
         plt.xlabel("$x$ coordinate (m)")
         plt.ylabel("$y$ coordinate (m)")
@@ -42,7 +48,9 @@ class Tree:
         plt.show()
 
     def _plot_recursion(self, node: TreeNode):
-        """Recursive call to plot the nodes of a tree"""
+        """
+        Recursive call to plot the nodes of a tree
+        """
         # Plot this node
         plt.plot(node.x, node.y, "o", color="tab:blue", zorder=1)
 
@@ -75,7 +83,9 @@ class TreeNode:
         self.children: list[TreeNode] = []
 
     def _add_child(self, x: float, y: float):
-        """Method that creates a new node, and adds it as a child of the current node"""
+        """
+        Method that creates a new node, and adds it as a child of the current node
+        """
         new_node: TreeNode = TreeNode(x, y, self)
         self.children.append(new_node)
 
