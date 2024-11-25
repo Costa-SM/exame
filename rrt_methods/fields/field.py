@@ -52,6 +52,7 @@ class Field:
         for obstacle in self.obstacles:
             obstacle.plot(fig, ax)
 
+    @staticmethod
     def __main__():
         from rrt_methods.obstacles.circle import Circle
         from rrt_methods.obstacles.polygon import Polygon

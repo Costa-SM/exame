@@ -38,7 +38,7 @@ class Obstacle(ABC):
 
     @staticmethod
     def __main__():
-        pass
+        raise NotImplementedError()
 
 
 if __name__ == "__main__":

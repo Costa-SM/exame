@@ -54,7 +54,7 @@ class Circle(Obstacle):
     def __main__():
         fig, ax = plt.subplots()
         ax.set_title("Circle")
-        circle = Circle(0, 0, 10)
+        circle = Circle(3, 3, 2)
         circle.plot(fig, ax)
         plt.show()
 

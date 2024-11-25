@@ -47,7 +47,7 @@ class Polygon(Obstacle):
     def __main__():
         fig, ax = plt.subplots()
         ax.set_title("Polygon")
-        polygon = Polygon([-5, -5, 5, 5], [-5, 5, 5, -5])
+        polygon = Polygon([6, 6, 8, 8], [6, 8, 8, 6])
         polygon.plot(fig, ax)
         plt.show()
 
