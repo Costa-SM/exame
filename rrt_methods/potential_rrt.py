@@ -21,12 +21,12 @@ class PotentialRRT:
         """
         Class that represents a potential RRT
         * source: source of the path
-        * potential_field: potential_field to find a path in
+        * potential_field: potential field to find a path in
         """
         self.tree = Tree(source)
         self.potential_field = potential_field
         self.max_it = 1000
-        self.goal_bias = 0.01
+        self.goal_bias = 0.2
         self.delta = 0.1
         self.eps = 1e-3
 
@@ -90,7 +90,7 @@ class PotentialRRT:
         fig, ax = plt.subplots(ncols=2)
         rrt = PotentialRRT(
             (1, 1),
-            PotentialField((10, 10), 5).add_obstacle(
+            PotentialField((10, 10), 2).add_obstacle(
                 Circle((3, 3), 2)
             ).add_obstacle(
                 Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
