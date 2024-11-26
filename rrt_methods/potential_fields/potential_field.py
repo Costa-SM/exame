@@ -7,10 +7,8 @@ from __future__ import annotations
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy.integrate as spi
 
 from rrt_methods.fields.field import Field
-from rrt_methods.obstacles.obstacle import Obstacle
 
 
 class PotentialField(Field):
@@ -27,20 +25,6 @@ class PotentialField(Field):
         super().__init__(shape)
         self.margin = margin
         self.normal_factor = math.prod(shape)
-
-    def add_obstacle(self, obstacle: Obstacle) -> PotentialField:
-        """
-        Adds an obstacle to the potential field
-        * obstacle: obstacle to add
-        """
-        super().add_obstacle(obstacle)
-        self.normal_factor = self.normal_factor * spi.dblquad(
-            lambda x, y: self.potential((x, y)),
-            0, self.shape[0],
-            0, self.shape[1],
-            epsrel=1e-2
-        )[0]
-        return self
 
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
         """
@@ -69,7 +53,7 @@ class PotentialField(Field):
             possible_potential = obstacle.distance(point)/self.margin
             if possible_potential < potential:
                 potential = possible_potential
-        return potential/self.normal_factor
+        return potential
 
     def __main__():
         from rrt_methods.obstacles.circle import Circle

@@ -72,6 +72,37 @@ class Tree:
         for child in node.children:
             self._plot_recursion(child, fig, ax)
 
+    def find_nearest(self, point: tuple[float, float]) -> TreeNode:
+        """
+        Find the nearest tree node to the point
+        * point: x and y coordinates of the point
+        """
+        return self._find_nearest_recursion(self.root, point)
+
+    def _find_nearest_recursion(
+            self,
+            node: TreeNode,
+            point: tuple[float, float]
+            ) -> TreeNode:
+        """
+        Recursive call to find the nearest tree node to the point
+        * node: current recursive call's node
+        * point: x and y coordinates of the point
+        """
+        nearest = node
+        nearest_distance: float = float(np.linalg.norm(
+            np.array(point) - np.array(nearest.point)
+        ))
+        for child in node.children:
+            child_nearest = self._find_nearest_recursion(child, point)
+            child_nearest_distance: float = float(np.linalg.norm(
+                np.array(point) - np.array(child_nearest.point)
+            ))
+            if child_nearest_distance < nearest_distance:
+                nearest = child_nearest
+                nearest_distance = child_nearest_distance
+        return nearest
+
     @staticmethod
     def __main__():
         sample_tree = Tree((0.0, 0.0))
@@ -106,7 +137,7 @@ class TreeNode:
         self.parent: TreeNode | None = parent
         self.children: list[TreeNode] = []
 
-    def _add_child(self, point: tuple[float, float]):
+    def add_child(self, point: tuple[float, float]):
         """
         Method that creates a new node
         and adds it as a child of the current node
@@ -115,10 +146,14 @@ class TreeNode:
         new_node: TreeNode = TreeNode(point, self)
         self.children.append(new_node)
 
-    def extend(self, point: tuple[float, float], delta: float):
+    def extend(
+            self,
+            point: tuple[float, float],
+            delta: float
+            ) -> tuple[float, float]:
         """
         Method for implementing the RRT that extends
-        the current node towards a given point
+        the current node towards a given point, returning the extension
         * point: x and y coordinates of the given point
         * delta: Maximum distance between the current node and the extension
         """
@@ -127,11 +162,11 @@ class TreeNode:
         ))
 
         if distance < delta:
-            self._add_child(point)
-        else:
-            point_limited = np.array(self.point) + \
-                delta * (np.array(point) - np.array(self.point)) / distance
-            self._add_child(point_limited)
+            return point
+
+        point_limited = np.array(self.point) + \
+            delta * (np.array(point) - np.array(self.point)) / distance
+        return point_limited
 
 
 if __name__ == "__main__":

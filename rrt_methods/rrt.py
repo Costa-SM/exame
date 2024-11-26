@@ -8,40 +8,40 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 
-from rrt_methods.potential_fields.potential_field import PotentialField
+from rrt_methods.fields.field import Field
 from rrt_methods.trees.tree import Tree
 
 
-class PotentialRRT:
+class RRT:
     def __init__(
             self,
             source: tuple[float, float],
-            potential_field: PotentialField,
+            field: Field,
             ) -> None:
         """
-        Class that represents a potential RRT
+        Class that represents a RRT
         * source: source of the path
-        * potential_field: potential_field to find a path in
+        * field: field to find a path in
         """
         self.tree = Tree(source)
-        self.potential_field = potential_field
+        self.field = field
         self.max_it = 1000
-        self.goal_bias = 0.01
+        self.goal_bias = 0.2
         self.delta = 0.1
         self.eps = 1e-3
 
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
         """
-        Plots the potential_field in the figure
+        Plots the field in the figure
         * fig: pyplot's figure
-        * ax: pyplot's axes (2 axes)
+        * ax: pyplot's axes (1 axis)
         """
-        self.potential_field.plot(fig, ax)
-        self.tree.plot(fig, ax[1])
+        self.field.plot(fig, ax)
+        self.tree.plot(fig, ax)
 
     def _check_collision_free(self, point: tuple[float, float]):
         ok = True
-        for obstacle in self.potential_field.obstacles:
+        for obstacle in self.field.obstacles:
             if obstacle.distance(point) == 0:
                 ok = False
         return ok
@@ -49,7 +49,7 @@ class PotentialRRT:
     def _sample_free_space(self) -> tuple[float, float]:
         while True:
             random_point = (
-                np.random.random(2)*np.array(self.potential_field.shape)
+                np.random.random(2)*np.array(self.field.shape)
             ).tolist()
             if self._check_collision_free(random_point):
                 return random_point
@@ -72,10 +72,6 @@ class PotentialRRT:
             )
             if not self._check_collision_free(extended_point):
                 continue
-            if not random.random() < self.potential_field.potential(
-                extended_point
-            ):
-                continue
             nearest_node.add_child(extended_point)
             if np.linalg.norm(
                 np.array(extended_point) - np.array(goal)
@@ -87,10 +83,10 @@ class PotentialRRT:
         from rrt_methods.obstacles.circle import Circle
         from rrt_methods.obstacles.polygon import Polygon
 
-        fig, ax = plt.subplots(ncols=2)
-        rrt = PotentialRRT(
+        fig, ax = plt.subplots()
+        rrt = RRT(
             (1, 1),
-            PotentialField((10, 10), 5).add_obstacle(
+            Field((10, 10)).add_obstacle(
                 Circle((3, 3), 2)
             ).add_obstacle(
                 Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
@@ -103,4 +99,4 @@ class PotentialRRT:
 
 
 if __name__ == "__main__":
-    PotentialRRT.__main__()
+    RRT.__main__()
