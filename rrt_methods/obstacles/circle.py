@@ -12,15 +12,13 @@ from rrt_methods.obstacles.obstacle import Obstacle
 
 class Circle(Obstacle):
 
-    def __init__(self, x: float, y: float, r: float) -> None:
+    def __init__(self, center: tuple[float, float], r: float) -> None:
         """
         Class that represents a circle obstacle
-        * x: x coordinate of the circle's center
-        * y: y coordinate of the circle's center
+        * center: x and y coordinates of the circle's center
         * r: radius of the circle
         """
-        self.x = x
-        self.y = y
+        self.center = center
         self.r = r
 
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
@@ -29,24 +27,22 @@ class Circle(Obstacle):
         * fig: pyplot's figure
         * ax: pyplot's axes (1 axis)
         """
-        ax.autoscale_view()
         ax.add_patch(
             plt.Circle(
-                [self.x, self.y],
+                self.center,
                 self.r,
                 facecolor="blue",
                 edgecolor="black",
             )
         )
 
-    def distance(self, x: float, y: float) -> float:
+    def distance(self, point: tuple[float, float]) -> float:
         """
         Calculates a point's distance to the circle
-        * x: x coordinate of the point
-        * y: y coordinate of the point
+        * point: x and y coordinates of the point
         """
         return float(np.max((
-            np.linalg.norm([self.x - x, self.y - y]) - self.r,
+            np.linalg.norm(np.array(point) - np.array(self.center)) - self.r,
             0
         )))
 
@@ -54,8 +50,9 @@ class Circle(Obstacle):
     def __main__():
         fig, ax = plt.subplots()
         ax.set_title("Circle")
-        circle = Circle(3, 3, 2)
+        circle = Circle((3, 3), 2)
         circle.plot(fig, ax)
+        ax.autoscale_view()
         plt.show()
 
 

@@ -28,11 +28,10 @@ class Obstacle(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def distance(self, x: float, y: float) -> float:
+    def distance(self, point: tuple[float, float]) -> float:
         """
         Calculates a point's distance to the obstacle
-        * x: x coordinate of the point
-        * y: y coordinate of the point
+        * point: x and y coordinates of the point
         """
         raise NotImplementedError()
 

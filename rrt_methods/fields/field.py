@@ -11,14 +11,12 @@ from rrt_methods.obstacles.obstacle import Obstacle
 
 class Field:
 
-    def __init__(self, width: float, height: float) -> None:
+    def __init__(self, shape: tuple[float, float]) -> None:
         """
         Class that represents a field
-        * width: width of the field
-        * height: height of the field
+        * shape: width and height of the field
         """
-        self.width = width
-        self.height = height
+        self.shape = shape
         self.obstacles = list[Obstacle]()
 
     def add_obstacle(self, obstacle: Obstacle) -> Field:
@@ -35,18 +33,17 @@ class Field:
         * fig: pyplot's figure
         * ax: pyplot's axes (1 axis)
         """
-        ax.autoscale_view()
         ax.set_title("Field")
         ax.set_xlabel("$x$ coordinate (m)")
         ax.set_ylabel("$y$ coordinate (m)")
         ax.plot(
-            [0, self.width],
-            [[0, self.height], [0, self.height]],
+            [0, self.shape[0]],
+            [[0, self.shape[1]], [0, self.shape[1]]],
             color="black",
         )
         ax.plot(
-            [[0, self.width], [0, self.width]],
-            [0, self.height],
+            [[0, self.shape[0]], [0, self.shape[0]]],
+            [0, self.shape[1]],
             color="black",
         )
         for obstacle in self.obstacles:
@@ -58,13 +55,14 @@ class Field:
         from rrt_methods.obstacles.polygon import Polygon
 
         fig, ax = plt.subplots()
-        field = Field(10, 10)
+        field = Field((10, 10))
         field.add_obstacle(
-            Circle(3, 3, 2)
+            Circle((3, 3), 2)
         ).add_obstacle(
-            Polygon([6, 6, 8, 8], [6, 8, 8, 6])
+            Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
         )
         field.plot(fig, ax)
+        ax.autoscale_view()
         plt.show()
 
 

@@ -12,14 +12,13 @@ from rrt_methods.obstacles.obstacle import Obstacle
 
 class Polygon(Obstacle):
 
-    def __init__(self, xs: list[float], ys: list[float]) -> None:
+    def __init__(self, points: list[tuple[float, float]]) -> None:
         """
         Class that represents a polygon obstacle
-        * xs: list of x coordinates of the polygon's contour
-        * ys: list of y coordinates of the polygon's contour
+        * points: list of x and y coordinates of the polygon's contour
         """
-        self.xys = list(zip(xs, ys))
-        self.poly = geo.Polygon(self.xys)
+        self.points = points
+        self.poly = geo.Polygon(points)
 
     def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
         """
@@ -27,28 +26,28 @@ class Polygon(Obstacle):
         * fig: pyplot's figure
         * ax: pyplot's axes (1 axis)
         """
-        ax.autoscale_view()
         ax.add_patch(
             plt.Polygon(
-                self.xys,
+                self.points,
                 facecolor="blue",
                 edgecolor="black",
             )
         )
 
-    def distance(self, x: float, y: float) -> float:
+    def distance(self, point: tuple[float, float]) -> float:
         """
         Calculates a point's distance to the polygon
         * x: x coordinate of the point
         * y: y coordinate of the point
         """
-        return self.poly.distance(geo.Point((x, y)))
+        return self.poly.distance(geo.Point(point))
 
     def __main__():
         fig, ax = plt.subplots()
         ax.set_title("Polygon")
-        polygon = Polygon([6, 6, 8, 8], [6, 8, 8, 6])
+        polygon = Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
         polygon.plot(fig, ax)
+        ax.autoscale_view()
         plt.show()
 
 
