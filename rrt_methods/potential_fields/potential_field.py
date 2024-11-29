@@ -38,10 +38,10 @@ class PotentialField(Field):
 
         # Configure the potential field
         potential_field = (
-            PotentialField((10, 10), 2)
+            PotentialField((10, 10), 1.5)
             .add_obstacle(Circle((3, 3), 2))
             .add_obstacle(Polygon([(6, 6), (6, 8), (8, 8), (8, 6)]))
-            .add_attractor((9, 9), 0.2)
+            .add_attractor((9, 9), 5)
         )
 
         # Get information about the potential field

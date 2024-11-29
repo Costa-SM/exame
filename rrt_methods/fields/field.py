@@ -26,9 +26,10 @@ class Field:
         from rrt_methods.obstacles.polygon import Polygon
 
         fig, ax = plt.subplots()
-        field = Field((10, 10))
-        field.add_obstacle(Circle((3, 3), 2)).add_obstacle(
-            Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
+        field = (
+            Field((10, 10))
+            .add_obstacle(Circle((3, 3), 2))
+            .add_obstacle(Polygon([(6, 6), (6, 8), (8, 8), (8, 6)]))
         )
         field.plot(fig, ax)
         ax.autoscale_view()

@@ -43,7 +43,7 @@ class ProbabilityField:
             PotentialField((10, 10), 1.5)
             .add_obstacle(Circle((3, 3), 2))
             .add_obstacle(Polygon([(6, 6), (6, 8), (8, 8), (8, 6)]))
-            .add_attractor((9, 9), 0.5)
+            .add_attractor((9, 9), 5)
         )
 
         # Probability field
