@@ -102,12 +102,12 @@ class PotentialRRT:
         * ax: matplotlib Axes object (2 axis)
         """
         # Plot the field and the 2D PDF
-        self.potential_field.plot_field(ax[0])  # type: ignore
-        self.tree.plot(ax[0], node_position=goal_position)  # type: ignore
+        self.potential_field.plot_field(fig, ax[0])  # type: ignore
+        self.tree.plot(fig, ax[0], node_position=goal_position)  # type: ignore
 
         if self.probability_field:
             self.probability_field.plot(fig, ax[1])  # type: ignore
-            self.tree.plot(ax[1], node_position=goal_position)  # type: ignore
+            self.tree.plot(fig, ax[1], node_position=goal_position)  # type: ignore
 
         ax[0].autoscale_view()  # type: ignore
         ax[1].autoscale_view()  # type: ignore

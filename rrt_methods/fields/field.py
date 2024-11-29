@@ -25,12 +25,12 @@ class Field:
         from rrt_methods.obstacles.circle import Circle
         from rrt_methods.obstacles.polygon import Polygon
 
-        _, ax = plt.subplots()
+        fig, ax = plt.subplots()
         field = Field((10, 10))
         field.add_obstacle(Circle((3, 3), 2)).add_obstacle(
             Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
         )
-        field.plot(ax)
+        field.plot(fig, ax)
         ax.autoscale_view()
         plt.show()
 
@@ -65,10 +65,7 @@ class Field:
             color="black",
         )
         for obstacle in self.obstacles:
-            obstacle.plot(ax)
-
-        ax.autoscale_view()
-
+            obstacle.plot(fig, ax)
 
 if __name__ == "__main__":
     Field.__main__()

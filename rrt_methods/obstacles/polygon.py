@@ -21,17 +21,18 @@ class Polygon(Obstacle):
         self.points = points
         self.poly = geo.Polygon(points)
 
+    @staticmethod
+    def __main__():
+        fig, ax = plt.subplots()
+        ax.set_title("Polygon")
+        polygon = Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
+        polygon.plot(fig, ax)
+        ax.autoscale()
+        plt.show()
+
     # -------------------------------------------------------------------------------- #
     # Public Methods
     # -------------------------------------------------------------------------------- #
-
-    @staticmethod
-    def __main__():
-        _, ax = plt.subplots()
-        ax.set_title("Polygon")
-        polygon = Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
-        polygon.plot(ax)
-        plt.show()
 
     def plot(self, fig: Figure, ax: Axes) -> None:
         """

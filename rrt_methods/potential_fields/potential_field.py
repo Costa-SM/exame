@@ -23,8 +23,9 @@ class PotentialField(Field):
         super().__init__(shape)
         self.margin = margin
 
-        # Attractors are an (x, y, q) tuple, representing position in space and charge
-        self.attractors: list[tuple[float, float, float]] = []
+        # Attractors are an (x, y, q) tuple,
+        # representing position in space and charge
+        self.attractors: list[tuple[tuple[float, float], float]] = []
         self.epsilon: float = 1e-3
         self.v_max: float = 10.0
 
@@ -40,7 +41,7 @@ class PotentialField(Field):
             PotentialField((10, 10), 2)
             .add_obstacle(Circle((3, 3), 2))
             .add_obstacle(Polygon([(6, 6), (6, 8), (8, 8), (8, 6)]))
-            .add_attractor((9, 9), 2)
+            .add_attractor((9, 9), 0.2)
         )
 
         # Get information about the potential field
@@ -53,8 +54,7 @@ class PotentialField(Field):
         )
 
         # Plot the potential field and the general field
-        potential_field.plot_field(ax[0])
-        potential_field.plot(fig, ax[1])
+        potential_field.plot(fig, ax)
         plt.show()
 
     # -------------------------------------------------------------------------------- #
@@ -67,7 +67,6 @@ class PotentialField(Field):
         * obstacle: Obstacle to be added, should be an `Obstacle` object
         """
         super().add_obstacle(obstacle)
-
         return self
 
     def add_attractor(self, point: tuple[float, float], charge) -> PotentialField:
@@ -77,38 +76,31 @@ class PotentialField(Field):
         * point: (x, y) coordinates of the attractor
         * charge: The attractor's charge for calculating the potential
         """
-        self.attractors.append((point[0], point[1], charge))
-
+        self.attractors.append(((point[0], point[1]), charge))
         return self
-
-    def plot_field(self, fig: Figure, ax: Axes) -> None:
-        """
-        Plots the Modeled Field
-        * fig: matplotlib Figure object
-        * ax: matplotlib Axes object (1 axes)
-        """
-        super().plot(ax)  # type: ignore
 
     def plot(self, fig: Figure, ax: Axes) -> None:
         """
         Plots the Potential Field
         * fig: matplotlib Figure object
-        * ax: matplotlib Axes object (1 axes)
+        * ax: matplotlib Axes object (2 axes)
         """
 
+        super().plot(fig, ax[1])
+
         points = np.meshgrid(
-            np.linspace(0, self.shape[0], 100), np.linspace(0, self.shape[1], 100)
+            np.linspace(0, self.shape[0], 100),
+            np.linspace(0, self.shape[1], 100)
         )
         potentials = np.vectorize(lambda x, y: self.potential((x, y)))(*points)
 
-        x, y = points
-        c = ax.contourf(x, y, potentials, levels=50, cmap="viridis")  # type: ignore
+        c = ax[0].contourf(*points, potentials, levels=50, cmap="viridis")
         fig.colorbar(c, location="right", label="Potential")
 
-        ax.set_title("Potential Field")  # type: ignore
-        ax.set_xlabel("$x$ coordinate (m)")  # type: ignore
-        ax.set_ylabel("$y$ coordinate (m)")  # type: ignore
-        ax.autoscale_view()
+        ax[0].set_title("Potential Field")
+        ax[0].set_xlabel("$x$ coordinate (m)")
+        ax[0].set_ylabel("$y$ coordinate (m)")
+        ax[0].autoscale_view()
 
     def compute_potential_range(self, linspace_len: int) -> tuple[float, float]:
         """
@@ -133,25 +125,23 @@ class PotentialField(Field):
         """
         potential: float = 0.0
 
-        for attractor in self.attractors:
-            distance = np.linalg.norm(
-                np.array([attractor[0], attractor[1]]) - np.array(point)
-            )
-
-            if distance < self.epsilon:
-                distance = self.epsilon
-
-            potential -= attractor[2] / distance  # type: ignore
-
         for obstacle in self.obstacles:
             distance = obstacle.distance(point)
 
             if distance < self.epsilon:
                 return self.v_max
 
-            multiplier = np.max([1 - distance / self.margin, 0.0])
+            potential += self.v_max * np.max([1 - distance/self.margin, 0.0])
 
-            potential += self.v_max * multiplier
+        for attractor_point, charge in self.attractors:
+            distance = np.linalg.norm(
+                np.array(attractor_point) - np.array(point)
+            )
+
+            if distance < self.epsilon:
+                distance = self.epsilon
+
+            potential -= charge / distance
 
         return potential
 

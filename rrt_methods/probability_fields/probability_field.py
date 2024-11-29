@@ -14,8 +14,8 @@ from rrt_methods.potential_fields.potential_field import PotentialField
 class ProbabilityField:
     def __init__(self, field: PotentialField):
         """
-        Class that creates a 2D Probability Density Function for a given Potential Field
-        and allows sampling it for points
+        Class that creates a 2D Probability Density Function
+        for a given Potential Field and allows sampling it for points
         * field: The PotentialField that will be used for generating the PDF
         """
         # Store the field as well as its maximum and minimum potential values
@@ -27,10 +27,8 @@ class ProbabilityField:
         # Compute the normalization factor for the PDF
         self.normalization_factor, _ = dblquad(  # type: ignore
             lambda x, y: self.pot_max - self.field.potential((x, y)),
-            0.0,
-            self.field.shape[0],
-            0.0,
-            self.field.shape[1],
+            0.0, self.field.shape[0],
+            0.0, self.field.shape[1],
             epsrel=1e-2,
         )
 
@@ -53,12 +51,11 @@ class ProbabilityField:
 
         # Create the plot
         fig, ax = plt.subplots(ncols=2, nrows=2)
-        probability_field.field.plot_field(ax[0, 0])
-        probability_field.field.plot(fig, ax[0, 1])
+        probability_field.field.plot(fig, ax[0, :])
 
         # Sample points from the distribution
         points = probability_field.rvs(num_points=4000)
-        ax[1, 0].scatter(points[:, 0], points[:, 1], s=5, c="red")  # type: ignore
+        ax[1, 0].scatter(points[:, 0], points[:, 1], s=5, c="red")
         ax[1, 0].set_title("Sampled Points")
         ax[1, 0].set_xlabel("$x$ coordinate (m)")
         ax[1, 0].set_ylabel("$y$ coordinate (m)")

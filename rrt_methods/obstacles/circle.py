@@ -25,10 +25,11 @@ class Circle(Obstacle):
 
     @staticmethod
     def __main__():
-        _, ax = plt.subplots()
+        fig, ax = plt.subplots()
         ax.set_title("Circle")
         circle = Circle((3, 3), 2)
-        circle.plot(ax)
+        circle.plot(fig, ax)
+        ax.autoscale()
         plt.show()
 
     # -------------------------------------------------------------------------------- #
@@ -54,8 +55,8 @@ class Circle(Obstacle):
         Calculates a point's distance to the circle
         * point: x and y coordinates of the point
         """
-        dist = np.linalg.norm(np.array(point) - np.array(self.center))
-        return float(np.max([dist - self.r, 0.0]))
+        center_dist = np.linalg.norm(np.array(point) - np.array(self.center))
+        return float(np.max([center_dist - self.r, 0.0]))
 
 
 if __name__ == "__main__":

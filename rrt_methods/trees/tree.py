@@ -33,8 +33,8 @@ class Tree:
 
         sample_tree.print()
 
-        _, ax = plt.subplots()
-        sample_tree.plot(ax)
+        fig, ax = plt.subplots()
+        sample_tree.plot(fig, ax)
         plt.show()
 
     # -------------------------------------------------------------------------------- #
