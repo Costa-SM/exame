@@ -6,3 +6,6 @@
 
 # Python cache files
 *.pyc
+
+# Austin files
+*.austin

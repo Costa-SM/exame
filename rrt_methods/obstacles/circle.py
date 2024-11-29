@@ -1,11 +1,12 @@
 # circle.py
-# Author: João Lucas
+# Author: Joao Lucas
 # Created: 23.11.2024
 
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.axes import Axes
 
 from rrt_methods.obstacles.obstacle import Obstacle
 
@@ -21,14 +22,13 @@ class Circle(Obstacle):
         self.center = center
         self.r = r
 
-    def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
+    def plot(self, ax: Axes) -> None:
         """
         Plots the circle in the figure
-        * fig: pyplot's figure
         * ax: pyplot's axes (1 axis)
         """
         ax.add_patch(
-            plt.Circle(
+            plt.Circle(  # type: ignore
                 self.center,
                 self.r,
                 facecolor="blue",
@@ -36,23 +36,25 @@ class Circle(Obstacle):
             )
         )
 
+        ax.autoscale_view()
+
     def distance(self, point: tuple[float, float]) -> float:
         """
         Calculates a point's distance to the circle
         * point: x and y coordinates of the point
         """
-        return float(np.max((
-            np.linalg.norm(np.array(point) - np.array(self.center)) - self.r,
-            0
-        )))
+        return float(
+            np.max(
+                [np.linalg.norm(np.array(point) - np.array(self.center)) - self.r, 0.0]
+            )
+        )
 
     @staticmethod
     def __main__():
-        fig, ax = plt.subplots()
+        _, ax = plt.subplots()
         ax.set_title("Circle")
         circle = Circle((3, 3), 2)
-        circle.plot(fig, ax)
-        ax.autoscale_view()
+        circle.plot(ax)
         plt.show()
 
 

@@ -2,15 +2,15 @@
 name = "rrt_methods"
 version = "0.1.0"
 description = ""
-authors = ["Arthur Stevenson <arthurcstevenson@gmail.com>", "João Lucas <joaolucasrrolim@gmail.com>"]
+authors = ["Arthur Stevenson <arthurcstevenson@gmail.com>", "Joao Lucas <joaolucasrrolim@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 numpy = "^2.1.3"
 matplotlib = "^3.9.2"
-shapely = "^2.0.6"
 scipy = "^1.14.1"
+shapely = "^2.0.6"
 
 
 [build-system]

@@ -1,12 +1,13 @@
 # obstacle.py
-# Author: João Lucas
+# Author: Joao Lucas
 # Created: 23.11.2024
 
 from __future__ import annotations
 
-import matplotlib.pyplot as plt
-
 from abc import ABC, abstractmethod
+
+import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
 
 
 class Obstacle(ABC):
@@ -19,10 +20,9 @@ class Obstacle(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
+    def plot(self, ax: Axes) -> None:
         """
         Plots the obstacle in the figure
-        * fig: pyplot's figure
         * ax: pyplot's axes (1 axis)
         """
         raise NotImplementedError()

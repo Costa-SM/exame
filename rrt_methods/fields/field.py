@@ -1,16 +1,17 @@
 # field.py
-# Author: João Lucas
+# Author: Joao Lucas
 # Created: 23.11.2024
 
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 
 from rrt_methods.obstacles.obstacle import Obstacle
 
 
 class Field:
-
     def __init__(self, shape: tuple[float, float]) -> None:
         """
         Class that represents a field
@@ -27,13 +28,12 @@ class Field:
         self.obstacles.append(obstacle)
         return self
 
-    def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
+    def plot(self, ax: Axes) -> None:
         """
         Plots the field in the figure
-        * fig: pyplot's figure
-        * ax: pyplot's axes (1 axis)
+        * ax: matplotlib Axes object (1 axis)
         """
-        ax.set_title("Field")
+        ax.set_title("Field Representation")
         ax.set_xlabel("$x$ coordinate (m)")
         ax.set_ylabel("$y$ coordinate (m)")
         ax.plot(
@@ -47,21 +47,21 @@ class Field:
             color="black",
         )
         for obstacle in self.obstacles:
-            obstacle.plot(fig, ax)
+            obstacle.plot(ax)
+
+        ax.autoscale_view()
 
     @staticmethod
     def __main__():
         from rrt_methods.obstacles.circle import Circle
         from rrt_methods.obstacles.polygon import Polygon
 
-        fig, ax = plt.subplots()
+        _, ax = plt.subplots()
         field = Field((10, 10))
-        field.add_obstacle(
-            Circle((3, 3), 2)
-        ).add_obstacle(
+        field.add_obstacle(Circle((3, 3), 2)).add_obstacle(
             Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
         )
-        field.plot(fig, ax)
+        field.plot(ax)
         ax.autoscale_view()
         plt.show()
 

@@ -1,17 +1,17 @@
 # polygon.py
-# Author: João Lucas
+# Author: Joao Lucas
 # Created: 23.11.2024
 
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import shapely.geometry as geo
+from matplotlib.axes import Axes
 
 from rrt_methods.obstacles.obstacle import Obstacle
 
 
 class Polygon(Obstacle):
-
     def __init__(self, points: list[tuple[float, float]]) -> None:
         """
         Class that represents a polygon obstacle
@@ -20,19 +20,20 @@ class Polygon(Obstacle):
         self.points = points
         self.poly = geo.Polygon(points)
 
-    def plot(self, fig: plt.Figure, ax: plt.Axes) -> None:
+    def plot(self, ax: Axes) -> None:
         """
         Plots the polygon in the figure
-        * fig: pyplot's figure
         * ax: pyplot's axes (1 axis)
         """
         ax.add_patch(
-            plt.Polygon(
+            plt.Polygon(  # type: ignore
                 self.points,
                 facecolor="blue",
                 edgecolor="black",
             )
         )
+
+        ax.autoscale_view()
 
     def distance(self, point: tuple[float, float]) -> float:
         """
@@ -42,12 +43,12 @@ class Polygon(Obstacle):
         """
         return self.poly.distance(geo.Point(point))
 
+    @staticmethod
     def __main__():
-        fig, ax = plt.subplots()
+        _, ax = plt.subplots()
         ax.set_title("Polygon")
         polygon = Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
-        polygon.plot(fig, ax)
-        ax.autoscale_view()
+        polygon.plot(ax)
         plt.show()
 
 
