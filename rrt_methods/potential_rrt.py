@@ -95,7 +95,7 @@ class PotentialRRT:
 
         print("Maximum search iterations reached!")
 
-    def plot(self, fig: Figure, ax: Axes, goal_position: tuple[float, float]) -> None:
+    def plot(self, fig: Figure, ax: Axes, goal_position: tuple[float, float] | None = None) -> None:
         """
         Plots fields and the Potential RRT
         * fig: matplotlib Figure object

@@ -5,8 +5,8 @@
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
-from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 
 from rrt_methods.obstacles.obstacle import Obstacle
 
@@ -20,6 +20,24 @@ class Field:
         self.shape = shape
         self.obstacles = list[Obstacle]()
 
+    @staticmethod
+    def __main__():
+        from rrt_methods.obstacles.circle import Circle
+        from rrt_methods.obstacles.polygon import Polygon
+
+        _, ax = plt.subplots()
+        field = Field((10, 10))
+        field.add_obstacle(Circle((3, 3), 2)).add_obstacle(
+            Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
+        )
+        field.plot(ax)
+        ax.autoscale_view()
+        plt.show()
+
+    # -------------------------------------------------------------------------------- #
+    # Public Methods
+    # -------------------------------------------------------------------------------- #
+
     def add_obstacle(self, obstacle: Obstacle) -> Field:
         """
         Adds an obstacle to the field
@@ -28,7 +46,7 @@ class Field:
         self.obstacles.append(obstacle)
         return self
 
-    def plot(self, ax: Axes) -> None:
+    def plot(self, fig: Figure, ax: Axes) -> None:
         """
         Plots the field in the figure
         * ax: matplotlib Axes object (1 axis)
@@ -50,20 +68,6 @@ class Field:
             obstacle.plot(ax)
 
         ax.autoscale_view()
-
-    @staticmethod
-    def __main__():
-        from rrt_methods.obstacles.circle import Circle
-        from rrt_methods.obstacles.polygon import Polygon
-
-        _, ax = plt.subplots()
-        field = Field((10, 10))
-        field.add_obstacle(Circle((3, 3), 2)).add_obstacle(
-            Polygon([(6, 6), (6, 8), (8, 8), (8, 6)])
-        )
-        field.plot(ax)
-        ax.autoscale_view()
-        plt.show()
 
 
 if __name__ == "__main__":

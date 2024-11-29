@@ -81,7 +81,7 @@ class PotentialField(Field):
 
         return self
 
-    def plot_field(self, ax: Axes) -> None:
+    def plot_field(self, fig: Figure, ax: Axes) -> None:
         """
         Plots the Modeled Field
         * fig: matplotlib Figure object

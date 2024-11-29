@@ -83,7 +83,7 @@ class RRT:
             if np.linalg.norm(np.array(extended_point) - np.array(goal)) < self.eps:
                 break
 
-    def plot(self, ax: Axes, goal_position: tuple[float, float] | None = None) -> None:
+    def plot(self, fig: Figure, ax: Axes, goal_position: tuple[float, float] | None = None) -> None:
         """
         Plots the field and the RRT
         * ax: matplotlib Axes object (1 axis)

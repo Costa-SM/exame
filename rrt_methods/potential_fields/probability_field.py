@@ -4,8 +4,8 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 from scipy.integrate import dblquad
 
 from rrt_methods.potential_fields.potential_field import PotentialField
