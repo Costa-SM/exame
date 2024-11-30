@@ -11,8 +11,9 @@ import numpy as np
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
+from rrt_methods.fields.field import Field
 from rrt_methods.potential_fields.potential_field import PotentialField
-from rrt_methods.potential_fields.probability_field import ProbabilityField
+from rrt_methods.probability_fields.probability_field import ProbabilityField
 from rrt_methods.trees.tree import Tree
 
 
@@ -102,7 +103,7 @@ class PotentialRRT:
         * ax: matplotlib Axes object (2 axis)
         """
         # Plot the field and the 2D PDF
-        self.potential_field.plot_field(fig, ax[0])  # type: ignore
+        Field.plot(self.potential_field, fig, ax[0])  # type: ignore
         self.tree.plot(fig, ax[0], node_position=goal_position)  # type: ignore
 
         if self.probability_field:
