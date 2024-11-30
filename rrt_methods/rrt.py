@@ -39,7 +39,7 @@ class RRT:
         from rrt_methods.obstacles.circle import Circle
         from rrt_methods.obstacles.polygon import Polygon
 
-        _, ax = plt.subplots()
+        fig, ax = plt.subplots()
         rrt = RRT(
             (1, 1),
             Field((10, 10))
@@ -49,7 +49,7 @@ class RRT:
 
         goal_position: tuple[float, float] = (9, 9)
         rrt.plan_path(goal_position)
-        rrt.plot(ax, goal_position)
+        rrt.plot(fig, ax, goal_position)
         ax.autoscale_view()
         ax.scatter(goal_position[0], goal_position[1])
         plt.show()
@@ -83,13 +83,13 @@ class RRT:
             if np.linalg.norm(np.array(extended_point) - np.array(goal)) < self.eps:
                 break
 
-    def plot(self, ax: Axes, goal_position: tuple[float, float] | None = None) -> None:
+    def plot(self, fig: Figure, ax: Axes, goal_position: tuple[float, float] | None = None) -> None:
         """
         Plots the field and the RRT
         * ax: matplotlib Axes object (1 axis)
         """
-        self.field.plot(ax)
-        self.tree.plot(ax, goal_position)
+        self.field.plot(fig, ax)
+        self.tree.plot(fig, ax, goal_position)
 
     # -------------------------------------------------------------------------------- #
     # Private Methods

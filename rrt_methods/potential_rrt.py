@@ -11,8 +11,9 @@ import numpy as np
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
+from rrt_methods.fields.field import Field
 from rrt_methods.potential_fields.potential_field import PotentialField
-from rrt_methods.potential_fields.probability_field import ProbabilityField
+from rrt_methods.probability_fields.probability_field import ProbabilityField
 from rrt_methods.trees.tree import Tree
 
 
@@ -95,19 +96,19 @@ class PotentialRRT:
 
         print("Maximum search iterations reached!")
 
-    def plot(self, fig: Figure, ax: Axes, goal_position: tuple[float, float]) -> None:
+    def plot(self, fig: Figure, ax: Axes, goal_position: tuple[float, float] | None = None) -> None:
         """
         Plots fields and the Potential RRT
         * fig: matplotlib Figure object
         * ax: matplotlib Axes object (2 axis)
         """
         # Plot the field and the 2D PDF
-        self.potential_field.plot_field(ax[0])  # type: ignore
-        self.tree.plot(ax[0], node_position=goal_position)  # type: ignore
+        Field.plot(self.potential_field, fig, ax[0])  # type: ignore
+        self.tree.plot(fig, ax[0], node_position=goal_position)  # type: ignore
 
         if self.probability_field:
             self.probability_field.plot(fig, ax[1])  # type: ignore
-            self.tree.plot(ax[1], node_position=goal_position)  # type: ignore
+            self.tree.plot(fig, ax[1], node_position=goal_position)  # type: ignore
 
         ax[0].autoscale_view()  # type: ignore
         ax[1].autoscale_view()  # type: ignore

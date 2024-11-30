@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
 
@@ -19,8 +19,16 @@ class Obstacle(ABC):
         """
         raise NotImplementedError()
 
+    @staticmethod
+    def __main__():
+        raise NotImplementedError()
+
+    # -------------------------------------------------------------------------------- #
+    # Public Methods
+    # -------------------------------------------------------------------------------- #
+
     @abstractmethod
-    def plot(self, ax: Axes) -> None:
+    def plot(self, fig: Figure, ax: Axes) -> None:
         """
         Plots the obstacle in the figure
         * ax: pyplot's axes (1 axis)
@@ -33,10 +41,6 @@ class Obstacle(ABC):
         Calculates a point's distance to the obstacle
         * point: x and y coordinates of the point
         """
-        raise NotImplementedError()
-
-    @staticmethod
-    def __main__():
         raise NotImplementedError()
 
 

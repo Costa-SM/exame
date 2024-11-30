@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
 
@@ -32,8 +33,8 @@ class Tree:
 
         sample_tree.print()
 
-        _, ax = plt.subplots()
-        sample_tree.plot(ax)
+        fig, ax = plt.subplots()
+        sample_tree.plot(fig, ax)
         plt.show()
 
     # -------------------------------------------------------------------------------- #
@@ -52,11 +53,7 @@ class Tree:
         """
         self._print_recursion(self.root)
 
-    def plot(
-        self,
-        ax: Axes,
-        node_position: tuple[float, float] | None = None,
-    ):
+    def plot(self, fig: Figure, ax: Axes, node_position: tuple[float, float] | None = None):
         """
         Creates a plot representing the tree
         * ax: matplotlib Axes object (1 axis)
